@@ -98,6 +98,13 @@ public class RubyController : MonoBehaviour
                 }
             }
         }
+        if (health <= 0 || score >= 3)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+        }
     }
     
     void FixedUpdate()
@@ -128,6 +135,16 @@ public class RubyController : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+
+        if (health <= 0)
+        {
+            loseTextObject.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+        }
     }
     
     void Launch()
@@ -160,7 +177,7 @@ public class RubyController : MonoBehaviour
         scoreText.text = "Robots Fixed: " + score.ToString();
 
         //display win screen
-        if (score >= 2)
+        if (score >= 3)
         {
             winTextObject.SetActive(true);
         }
